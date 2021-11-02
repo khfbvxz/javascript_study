@@ -41,5 +41,29 @@ let 배열2 = {
 // }
 // console.log(배열2)
 
-console.log(Array.isArray(배열))
-console.log(Array.isArray(배열2))
+// console.log(Array.isArray(배열))
+// console.log(Array.isArray(배열2))
+
+// let cond = true;
+// let value = cond ? '참' : '거짓';
+// console.log(value)
+
+// let opo = [null,null,NaN, undefined];
+// console.log(opo.length)
+
+// const arr = ['가','나','다','라','마']
+// arr.splice(2,0,'바')
+// console.log(arr)
+
+// const f = (x,y,z) =>{
+//   const a =100;
+//   return x+y+a;
+// }
+// console.log(f(2,3,4))
+
+const a = { name : 'zero'};
+const arr = [1,2,a];
+console.log(a ===arr[2])
+
+const arra = [1,2,3];
+console.log(arra ===[1,2,3])
