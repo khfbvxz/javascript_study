@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>숫자야구게임</title>
+
+</head>
+<body>
+  <form id="form">
+    <input type="text" id="input">
+    <button>확인</button>
+
+  </form>
+  <div id="log">  </div>
+    <script>
+      const $input = document.querySelector('#input');
+      const $form = document.querySelector('#form');
+      const $log = document.querySelector('#log');
+
+      // 빈 배열 선언
+      const numbers = [];
+      for (let n =0 ; n<9 ; n+=1){
+        numbers.push(n+1);
+      }
+
+      const answer = [] ;
+      for(let n = 0 ; n< 4 ; n +=1){
+        const index = Math.floor(Math.random()*(numbers.length-n)); // 0~8 정수
+        answer.push(numbers[index]);
+        numbers.splice(index,1); // 하나씩 빼고 배열의 요소도 없어짐 
+      }
+      console.log(answer);
+      const tries = []  ;
+      function checkInput(input){ // 검사하는 코드
+        if(input.length !==4){
+          return alert('4자리 숫자를 입력해주세요');
+        }
+        if(new Set(input).size !==4){ // 중복된 숫자가 있는가
+          return alert('중복되지 않게 입력해주세요');
+        }
+        if(tries.includes(input)){  // 이미 시도한 값이 아닌가 
+          return alert('이미 시도한 값입니다.')
+        }
+        return true;
+      }
+      function outmassage(){
+        const massage = document.createTextNode(`패배! 정답은 ${answer.join('')}`);
+        $log.appendChild(massage);
+        
+      }
+      let out = 0;
+      $form.addEventListener('submit', (event) =>{
+        event.preventDefault();// 기본동작 막기
+        const value = $input.value;  // event.target[0].value
+        $input.value= '';
+
+        if(!checkInput(value)){
+          return;
+        }
+        // 입력값 문제 없음
+        if(answer.join('')===value){
+          $log.textContent = '홈런!';
+          return;
+        }
+        if(tries.length >= 9){
+          outmassage();
+          return;
+        }
+        // 몇 스트라이크 몇 볼인지 
+        let strike = 0 ;
+        let ball = 0 ;
+        // answer = 3146  value ;1234
+        for (let i = 0 ; i<answer.length; i++){
+          const index = value.indexOf(answer[i]);
+          if (index > -1){ // 일치하는 숫자를 발견 ?? 
+            if(index === i ){ // 자리수도 같은가
+              strike+=1;
+            }else{ // 숫자만 같음 
+              ball +=1;
+            }
+          }
+        }
+        if ( strike === 0 && ball === 0 ){
+          out++;
+          $log.append(`${value} :아웃`,document.createElement('br'));
+        } else {
+          $log.append(`${value}: ${strike} 스트라이크 ${ball} 볼` , document.createElement('br') );
+        }
+        if(out ===3 ){
+          outmassage();
+          return;       
+        }
+
+        tries.push(value);
+      });
+    </script>
+
+</body>
+</html>
