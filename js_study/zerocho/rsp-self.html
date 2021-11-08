@@ -66,12 +66,12 @@
         clearInterval(intervalId);
         clickable = false;
         // 점수 계산 및 화면 표시
-        const myChoise = event.target.textContent ==='바위'
+        const myChoice = event.target.textContent ==='바위'
           ? 'rock'
           : event.target.textContent ==='가위'
             ? 'scissors'
             :'paper'
-        const myScore = scoreTable[myChoise];
+        const myScore = scoreTable[myChoice];
         const computerScore = scoreTable[computerChoice];
         const diff = myScore - computerScore;
 
