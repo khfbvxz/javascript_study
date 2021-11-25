@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>이벤트버블링</title>
 </head>
+
 <body>
   <header>
     <div>
@@ -14,21 +16,40 @@
   </header>
   <script>
     //document.querySelector('header').addEventListener('click',()=>{
-      //console.log('hello event bubbling');
+    //console.log('hello event bubbling');
     //})
-    //class Human{
- //     constructor(name, age){
-  //      this.name = name;
-  //      this.age = age;
-    //  }
-   //   sayName(){
-     //   console.log(this.name);
-   //   }
-   //   sayName(){
-    //    console.log(this.age);
-  //    }
-  //  }
-  //  Human.sayName();
+    class Human {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      sayName() {
+        console.log(this.name);
+      }
+      sayAge() {
+        console.log(this.age);
+      }
+    }
+    
+    class Programmer extends Human{
+      constructor(name, age, langueges){
+        super(name, age);
+        this.langueges=langueges;
+      }
+      writeCode(){
+        console.log(this.langueges.join() + '(으)로 코딩합니다.~');
+  
+      }
+    }
+    const programmer = new Programmer(
+      'myu',
+      28,
+      ['html', 'css', 'java', 'python'],
+    );
+    programmer.writeCode();
+    programmer.sayName();
+    programmer.sayAge();
   </script>
 </body>
+
 </html>
