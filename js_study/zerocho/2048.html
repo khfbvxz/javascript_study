@@ -86,12 +86,12 @@
   startGame();
 
   // 더미 데이터 
-  data = [
-    [0, 2, 4, 2],
-    [0, 0, 4, 0],
-    [2, 2, 4, 8],
-    [0, 16, 0, 4],
-  ]
+  //data = [
+  //  [0, 2, 4, 2],
+  //  [0, 0, 4, 0],
+  //  [2, 1024, 1024, 8],
+  //  [0, 16, 0, 4],
+  //]
 
   draw();
   function moveCells(direction){
@@ -104,6 +104,8 @@
             const currentRow = newData[i]
             const prevData = currentRow[currentRow.length -1];
             if(prevData === cellData){ // 이전 값과 지금값이 같은면
+              const score = parseInt($score.textContent);
+              $score.textContent = score + currentRow[currentRow.length - 1] * 2;
               currentRow[currentRow.length - 1] *= (-2);// 트릭 한꺼번에  안합쳐기게?
             } else {
               newData[i].push(cellData);
@@ -127,6 +129,8 @@
               const currentRow = newData[i]
               const prevData = currentRow[currentRow.length -1];
               if(prevData === rowData[3-j]){
+                const score = parseInt($score.textContent);
+                $score.textContent = score + currentRow[currentRow.length - 1] * 2;
                 currentRow[currentRow.length -1] *= (-2); 
               } else {
                 newData[i].push(rowData[ 3 - j]);
@@ -150,6 +154,8 @@
               const currentRow = newData[j]
               const prevData = currentRow[currentRow.length -1];
               if(prevData === cellData){
+                const score = parseInt($score.textContent);
+                $score.textContent = score + currentRow[currentRow.length - 1] * 2;
                 currentRow[currentRow.length -1] *= (-2);
               } else {
                 newData[j].push(cellData);
@@ -174,6 +180,8 @@
               const currentRow = newData[j]
               const prevData = currentRow[currentRow.length -1];
               if(prevData === data[3-i][j]){
+                const score = parseInt($score.textContent);
+                $score.textContent = score + currentRow[currentRow.length - 1] * 2;
                 currentRow[currentRow.length -1] *= (-2);
               } else {
                 newData[j].push(data[3-i][j]);
@@ -191,8 +199,17 @@
         break;
       }
     }
-    put2ToRandomCell();
-    draw();
+    if(data.flat().includes(2048)){ // 승리 2차원 배열을 1차원 배열로 
+      draw();
+      setTimeout(()=> {
+        alert('축하합니다. 2048을 만들었습니다.');
+      },50);
+    } else if(!data.flat().includes(0)) { // 빈 칸이 없으면
+      alert(`패배했습니다....... ${$score.textContent} 점을 얻었습니다. `)
+    } else{
+      put2ToRandomCell();
+      draw();
+    }
   }
 
   window.addEventListener('keyup',(event)=> {
